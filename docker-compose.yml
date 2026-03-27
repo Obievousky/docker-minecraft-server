@@ -13,6 +13,8 @@ services:
       - ./servers/${SERVER_NAME}-server/config:/server/config
       - ./servers/${SERVER_NAME}-server/world:/server/world
       - ./servers/${SERVER_NAME}-server/logs:/server/logs
+    environment:
+      - JAVA_TOOL_OPTIONS=-Xms${JAVA_MEMORY:-4G}
     restart: unless-stopped
 
   filebrowser:
