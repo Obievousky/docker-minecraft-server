@@ -5,7 +5,7 @@ ENV NEOFORGE_VERSION=${NEOFORGE_VERSION}
 
 WORKDIR /server
 
-RUN apt-get update && apt-get install -y curl netcat-openbsd && rm -rf /var/lib/apt/lists/* \
+RUN apt-get update && apt-get install -y curl && rm -rf /var/lib/apt/lists/* \
   && curl -o neoforge-installer.jar \
      "https://maven.neoforged.net/releases/net/neoforged/neoforge/${NEOFORGE_VERSION}/neoforge-${NEOFORGE_VERSION}-installer.jar"
 
@@ -13,9 +13,6 @@ RUN java -jar neoforge-installer.jar --installServer && rm neoforge-installer.ja
 
 RUN echo "eula=true" > eula.txt
 
-COPY entrypoint.sh /entrypoint.sh
-RUN chmod +x /entrypoint.sh
-
 EXPOSE 25565
 
-ENTRYPOINT ["/entrypoint.sh"]
+CMD ["sh", "run.sh"]

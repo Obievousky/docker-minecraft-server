@@ -1,0 +1,42 @@
+name: ${SERVER_NAME:-minecraft-server}
+
+services:
+  tailscale:
+    image: tailscale/tailscale:latest
+    hostname: ${SERVER_NAME:-minecraft-server}
+    container_name: tailscale-${SERVER_NAME:-minecraft-server}
+    environment:
+      - TS_AUTHKEY=${TS_AUTHKEY}
+      - TS_STATE_DIR=/var/lib/tailscale
+      - TS_USERSPACE=false
+      - TS_EXTRA_ARGS=--advertise-tags=tag:minecraft
+    volumes:
+      - ./tailscale-data:/var/lib/tailscale
+    devices:
+      - /dev/net/tun:/dev/net/tun
+    cap_add:
+      - net_admin
+      - sys_module
+    restart: unless-stopped
+
+  neoforge:
+    build:
+      context: .
+      args:
+        NEOFORGE_VERSION: ${NEOFORGE_VERSION}
+    env_file:
+      - .env
+    network_mode: service:tailscale
+    depends_on:
+      - tailscale
+    volumes:
+      - ./mods:/server/mods
+      - ./config:/server/config
+      - ./world:/server/world
+      - ./logs:/server/logs
+    container_name: ${SERVER_NAME:-minecraft-server}
+    environment:
+      - JAVA_TOOL_OPTIONS=-Xms${JAVA_MIN_MEMORY:-4G} -Xmx${JAVA_MAX_MEMORY:-8G}
+    stdin_open: true
+    tty: true
+    restart: unless-stopped

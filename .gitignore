@@ -1,3 +1,4 @@
-.env
-filebrowser.db
 servers/
+filebrowser/filebrowser.db
+filebrowser/tailscale-data/
+template/tailscale-data/
