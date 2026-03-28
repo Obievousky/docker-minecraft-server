@@ -60,7 +60,8 @@ if [ -d "$TARGET" ]; then
   exit 1
 fi
 
-# Copy template
+# Create server directory and copy template
+mkdir -p ./servers
 cp -r ./template "$TARGET"
 
 # Write .env

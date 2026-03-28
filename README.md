@@ -91,6 +91,16 @@ From FileBrowser you can upload mods, edit configs, and manage files for all you
 | `JAVA_MAX_MEMORY` | JVM maximum heap memory | `8G` |
 | `TS_AUTHKEY` | Tailscale OAuth client secret | required |
 
+## Troubleshooting
+
+### Permission denied connecting to Docker socket
+If you see `permission denied while trying to connect to the Docker daemon socket`, your user is not in the docker group. Fix it with:
+```bash
+sudo usermod -aG docker $USER
+```
+
+Then log out and back in for the change to take effect.
+
 ## License
 
 MIT
