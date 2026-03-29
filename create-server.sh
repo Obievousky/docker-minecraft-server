@@ -112,6 +112,7 @@ fi
 
 # Grab password from logs if first boot
 FB_PASSWORD=$(docker logs filebrowser 2>&1 | grep -o 'password: [^ ]*' | tail -1 | cut -d' ' -f2)
+HOST_IP=$(hostname -I | awk '{print $1}') # Get host IP
 
 echo ""
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
@@ -121,7 +122,7 @@ echo "  Server:      ${SERVER_NAME}-server"
 echo "  NeoForge:    ${NEOFORGE_VERSION}"
 echo "  Connect via: ${SERVER_NAME}.your-tailnet.ts.net:25565"
 echo ""
-echo "  FileBrowser: http://localhost:8080"
+echo "  FileBrowser: http://${HOST_IP}:8080"
 echo "  FB User:     admin"
 if [ -n "$FB_PASSWORD" ]; then
   echo "  FB Password: $FB_PASSWORD"

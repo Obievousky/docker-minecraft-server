@@ -13,6 +13,8 @@ RUN java -jar neoforge-installer.jar --installServer && rm neoforge-installer.ja
 
 RUN echo "eula=true" > eula.txt
 
+RUN chown -R 1000:1000 /server
+
 EXPOSE 25565
 
 CMD ["sh", "run.sh"]
