@@ -26,6 +26,7 @@ services:
         NEOFORGE_VERSION: ${NEOFORGE_VERSION}
     env_file:
       - .env
+    user: "1000:1000"
     network_mode: service:tailscale
     depends_on:
       - tailscale
