@@ -6,29 +6,3 @@
   "database": "/database.db",
   "root": "/srv"
 }
-```
-
----
-
-**`.gitignore`** (root)
-```
-servers/
-filebrowser/filebrowser.db
-filebrowser/tailscale-data/
-template/tailscale-data/
-```
-
----
-
-**Final folder structure:**
-```
-minecraft/
-├── .gitignore
-├── create-server.sh
-├── filebrowser/
-│   ├── docker-compose.yml
-│   └── filebrowser.json
-└── template/
-    ├── .env.example
-    ├── Dockerfile
-    └── docker-compose.yml

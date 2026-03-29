@@ -71,10 +71,11 @@ for SERVER in "${TO_DELETE[@]}"; do
 
   echo "  Deleting $SERVER..."
 
-  # Stop and remove containers
+  # Stop and remove containers first
   cd "$TARGET" && docker compose down --rmi all --volumes 2>/dev/null
 
-  # Remove files
+  # Go back before deleting folder
+  cd "$SERVERS_DIR"
   rm -rf "$TARGET"
 
   echo "  ✓ $SERVER deleted!"
