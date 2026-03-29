@@ -9,7 +9,10 @@ echo "━━━━━━━━━━━━━━━━━━━━━━━━�
 echo ""
 
 # List available servers
-SERVERS=($(ls -d "$SERVERS_DIR"/*-server 2>/dev/null | xargs -n1 basename))
+SERVERS=()
+while IFS= read -r -d '' dir; do
+  SERVERS+=("$(basename "$dir")")
+done < <(find "$SERVERS_DIR" -maxdepth 1 -name "*-server" -type d -print0 2>/dev/null)
 
 if [ ${#SERVERS[@]} -eq 0 ]; then
   echo "  No servers found!"
@@ -68,8 +71,16 @@ fi
 echo ""
 for SERVER in "${TO_DELETE[@]}"; do
   TARGET="$SERVERS_DIR/$SERVER"
+  SERVER_NAME="${SERVER%-server}"
 
   echo "  Deleting $SERVER..."
+
+  # Remove device from Tailscale tailnet
+  TS_CONTAINER="tailscale-${SERVER_NAME}"
+  if docker ps --format '{{.Names}}' | grep -q "^${TS_CONTAINER}$"; then
+    echo "  Removing Tailscale device..."
+    docker exec "$TS_CONTAINER" tailscale logout 2>/dev/null
+  fi
 
   # Stop and remove containers first
   cd "$TARGET" && docker compose down --rmi all --volumes 2>/dev/null
