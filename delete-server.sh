@@ -82,7 +82,7 @@ if docker ps --format '{{.Names}}' | grep -q "^${TS_CONTAINER}$"; then
 
   success=false
   for i in {1..3}; do
-    if docker exec "$TS_CONTAINER" tailscale logout; then
+    if docker exec "$TS_CONTAINER" tailscale logout >/dev/null 2>&1; then
       success=true
       break
     fi
