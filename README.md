@@ -144,8 +144,7 @@ Make sure you have created the `tag:minecraft` tag in Access Controls **before**
 
 ## Acknowledgements
 
-This project was built with the help of [Claude](https://claude.ai) by Anthropic — who somehow survived a very long conversation about Docker, Tailscale, Git SSH keys, and the occasional typo. 🤖
-
+This project was built with the help of [Claude](https://claude.ai)
 ## License
 
 MIT
