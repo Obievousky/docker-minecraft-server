@@ -113,8 +113,6 @@ done
 echo ""
 
 TS_IP=$(docker exec tailscale-${SERVER_NAME} tailscale ip -4 2>/dev/null)
-TS_DNS=$(docker exec tailscale-${SERVER_NAME} tailscale status --json 2>/dev/null \
-  | grep -o '"DNSName":"[^"]*"' | head -1 | cut -d'"' -f4 | sed 's/\.$//')
 
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 echo " ✓ Setup complete!"
@@ -123,10 +121,12 @@ echo " Server:    ${SERVER_NAME}"
 echo " NeoForge:  ${NEOFORGE_VERSION}"
 echo ""
 echo " Tailscale IP:  ${TS_IP:-unavailable}"
-echo " Tailscale DNS: ${TS_DNS:-unavailable}"
+echo " Tailscale DNS: ${SERVER_NAME:-unavailable}"
 echo ""
 echo " Minecraft:  ${TS_IP:-<ip>}:25565"
+echo "             ${SERVER_NAME}:25565"
 echo " FileBrowser: http://${TS_IP:-<ip>}:8080"
+echo "              http://${SERVER_NAME:-<ip>}:8080"
 echo ""
 read -p " [a] Attach to server console [e] Exit: " CHOICE
 if [ "$CHOICE" = "a" ]; then
