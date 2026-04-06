@@ -1,4 +1,4 @@
-# Docker NeoForge Minecraft Server
+# Aether
 
 Dockerized NeoForge Minecraft server with automatic setup, built-in FileBrowser for server management, and Tailscale for secure private access — no port forwarding needed.
 
