@@ -108,34 +108,31 @@ for i in {1..30}; do
   fi
   echo -n "."
   sleep 1
-  if (( i % 3 == 0 )); then
-    echo -ne "\b\b\b   \b\b\b"
-  fi
 done
 echo ""
 
-TS_IP=$(docker exec tailscale-${SERVER_NAME} tailscale ip -4 2>/dev/null)
+TS_IP=$(docker exec "tailscale-${SERVER_NAME}" tailscale ip -4 2>/dev/null)
 
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-echo " ✓ Setup complete!"
+echo "  ✓ Setup complete!"
 echo ""
-echo " Server:    ${SERVER_NAME}"
-echo " NeoForge:  ${NEOFORGE_VERSION}"
+echo "  Server:    ${SERVER_NAME}"
+echo "  NeoForge:  ${NEOFORGE_VERSION}"
 echo ""
-echo " Tailscale IP:  ${TS_IP:-unavailable}"
+echo "  Tailscale IP:  ${TS_IP:-unavailable}"
 echo ""
-echo " Minecraft"
-echo "    Hostname: ${SERVER_NAME}:25565"
-echo "    IP:       ${TS_IP:-unavailable}:25565"
+echo "  Minecraft"
+echo "     Hostname: ${SERVER_NAME}:25565"
+echo "     IP:       ${TS_IP:-unavailable}:25565"
 echo ""
-echo " FileBrowser"
-echo "    Hostname: http://${SERVER_NAME}:8080"
-echo "    IP:       http://${TS_IP:-unavailable}:8080"
+echo "  FileBrowser"
+echo "     Hostname: http://${SERVER_NAME}:8080"
+echo "     IP:       http://${TS_IP:-unavailable}:8080"
 echo ""
-read -p " [a] Attach to server console [e] Exit: " CHOICE
+read -p "  [a] Attach to server console  [e] Exit: " CHOICE
 if [ "$CHOICE" = "a" ]; then
   docker attach "${SERVER_NAME}"
 else
-  echo " Exiting. Server is running in the background!"
+  echo "  Exiting. Server is running in the background!"
 fi
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"

@@ -1,9 +1,10 @@
-name: ${SERVER_NAME:-Aether}
+name: ${SERVER_NAME:-aether}
+
 services:
   tailscale:
     image: tailscale/tailscale:latest
-    hostname: ${SERVER_NAME:-Aether}
-    container_name: tailscale-${SERVER_NAME:-Aether}
+    hostname: ${SERVER_NAME:-aether}
+    container_name: tailscale-${SERVER_NAME:-aether}
     environment:
       - TS_AUTHKEY=${TS_AUTHKEY}?ephemeral=true
       - TS_STATE_DIR=/var/lib/tailscale
@@ -30,12 +31,26 @@ services:
     network_mode: service:tailscale
     depends_on:
       - tailscale
-    container_name: ${SERVER_NAME:-Aether}
+    volumes:
+      - server-data:/server
+    container_name: ${SERVER_NAME:-aether}
     environment:
       - JAVA_TOOL_OPTIONS=-Xms${JAVA_MIN_MEMORY:-4G} -Xmx${JAVA_MAX_MEMORY:-8G}
     stdin_open: true
     tty: true
     restart: unless-stopped
 
+  filebrowser:
+    image: filebrowser/filebrowser:latest
+    container_name: filebrowser-${SERVER_NAME:-aether}
+    network_mode: service:tailscale
+    depends_on:
+      - tailscale
+      - neoforge
+    volumes:
+      - server-data:/srv
+    restart: unless-stopped
+
 volumes:
   tailscale-data:
+  server-data:
